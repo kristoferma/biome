@@ -3648,6 +3648,11 @@ export interface Nursery {
 	 */
 	useVueBaseImport?: UseVueBaseImportConfiguration;
 	/**
+	 * Require \<component> elements to bind the is attribute.
+	 * See https://biomejs.dev/linter/rules/use-vue-component-is
+	 */
+	useVueComponentIs?: UseVueComponentIsConfiguration;
+	/**
 	 * Enforce a consistent hyphenation style for event names in v-on directives on custom components.
 	 * See https://biomejs.dev/linter/rules/use-vue-consistent-event-hyphenation
 	 */
@@ -6228,6 +6233,9 @@ export type UseValidTestTitleConfiguration =
 export type UseVueBaseImportConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueBaseImportOptions;
+export type UseVueComponentIsConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueComponentIsOptions;
 export type UseVueConsistentEventHyphenationConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueConsistentEventHyphenationOptions;
@@ -9061,6 +9069,10 @@ export interface RuleWithUseVueBaseImportOptions {
 	level: RulePlainConfiguration;
 	options?: UseVueBaseImportOptions;
 }
+export interface RuleWithUseVueComponentIsOptions {
+	level: RulePlainConfiguration;
+	options?: UseVueComponentIsOptions;
+}
 export interface RuleWithUseVueConsistentEventHyphenationOptions {
 	/**
 	 * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
@@ -11422,6 +11434,7 @@ export interface UseValidTestTitleOptions {
 	disallowedWords?: string[];
 }
 export type UseVueBaseImportOptions = {};
+export type UseVueComponentIsOptions = {};
 export interface UseVueConsistentEventHyphenationOptions {
 	/**
 	 * Whether event names in `v-on` directives must be hyphenated (`"always"`) or must not
@@ -13024,6 +13037,7 @@ export type Category =
 	| "lint/nursery/useUniqueVariableNames"
 	| "lint/nursery/useValidTestTitle"
 	| "lint/nursery/useVueBaseImport"
+	| "lint/nursery/useVueComponentIs"
 	| "lint/nursery/useVueConsistentDefinePropsDeclaration"
 	| "lint/nursery/useVueConsistentEventHyphenation"
 	| "lint/nursery/useVueMatchingComponentFileName"
