@@ -25,7 +25,6 @@ use biome_configuration::graphql::{
     GraphqlAssistConfiguration, GraphqlAssistEnabled, GraphqlFormatterConfiguration,
     GraphqlFormatterEnabled, GraphqlLinterConfiguration, GraphqlLinterEnabled,
 };
-use biome_db::AnyParsedSource;
 use biome_formatter::{
     BracketSpacing, FormatError, IndentStyle, IndentWidth, LineEnding, LineWidth, Printed,
     QuoteStyle, TrailingNewline,
@@ -38,6 +37,7 @@ use biome_graphql_parser::parse_graphql_with_cache;
 use biome_graphql_syntax::{
     GraphqlLanguage, GraphqlRoot, GraphqlSyntaxKind, GraphqlSyntaxNode, TextRange, TextSize,
 };
+use biome_parser::db::AnyParsedSource;
 use biome_rowan::{AstNode, NodeCache, SyntaxKind, TokenAtOffset};
 use camino::Utf8Path;
 use std::borrow::Cow;

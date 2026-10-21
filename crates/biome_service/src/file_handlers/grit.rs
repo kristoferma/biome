@@ -19,7 +19,6 @@ use biome_configuration::grit::{
     GritAssistConfiguration, GritAssistEnabled, GritFormatterConfiguration, GritFormatterEnabled,
     GritLinterConfiguration, GritLinterEnabled,
 };
-use biome_db::AnyParsedSource;
 use biome_diagnostics::{Diagnostic, Severity};
 use biome_formatter::{
     FormatError, IndentStyle, IndentWidth, LineEnding, LineWidth, Printed, TrailingNewline,
@@ -28,6 +27,7 @@ use biome_fs::BiomePath;
 use biome_grit_formatter::{context::GritFormatOptions, format_node};
 use biome_grit_parser::parse_grit_with_cache;
 use biome_grit_syntax::{GritLanguage, GritRoot, GritSyntaxKind, GritSyntaxNode};
+use biome_parser::db::AnyParsedSource;
 use biome_rowan::{AstNode, NodeCache, SyntaxKind, TextRange, TextSize, TokenAtOffset};
 use camino::Utf8Path;
 use tracing::debug_span;

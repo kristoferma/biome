@@ -23,7 +23,6 @@ use biome_analyze::{
 use biome_configuration::analyzer::assist::AssistEnabled;
 use biome_configuration::yaml::YamlLinterEnabled;
 use biome_configuration::yaml::{YamlFormatterConfiguration, YamlFormatterEnabled};
-use biome_db::AnyParsedSource;
 use biome_formatter::{
     BracketSpacing, IndentStyle, IndentWidth, LineEnding, LineWidth, Printed, QuoteStyle,
     TrailingNewline,
@@ -31,6 +30,7 @@ use biome_formatter::{
 use biome_fs::BiomePath;
 use biome_languages::DocumentFileSource;
 use biome_parser::NodeParse;
+use biome_parser::db::AnyParsedSource;
 use biome_rowan::{AstNode, NodeCache};
 use biome_yaml_analyze::{analyze, analyze_snippet};
 use biome_yaml_formatter::{YamlFormatOptions, format_node};

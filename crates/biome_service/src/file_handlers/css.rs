@@ -36,13 +36,13 @@ use biome_css_formatter::format_node;
 use biome_css_parser::{CssModulesKind, CssParserOptions};
 use biome_css_semantic::semantic_model;
 use biome_css_syntax::{AnyCssRoot, CssLanguage, CssRoot, CssSyntaxNode};
-use biome_db::AnyParsedSource;
 use biome_formatter::{
     DelimiterSpacing, FormatError, IndentStyle, IndentWidth, LineEnding, LineWidth, Printed,
     QuoteStyle, TrailingNewline,
 };
 use biome_fs::BiomePath;
 use biome_languages::DocumentFileSource;
+use biome_parser::db::AnyParsedSource;
 use biome_rowan::{AstNode, NodeCache, SyntaxKind};
 use biome_rowan::{TextRange, TextSize, TokenAtOffset};
 use camino::Utf8Path;
