@@ -7,6 +7,9 @@
 //!   compares declarations with each other.
 //! - [`VueProp`] runs the rule once per prop. Use it when the rule judges
 //!   one prop on its own.
+//! - [`VueSnippet`] runs the rule once on an embedded snippet, such as a
+//!   directive value. Use it when the rule judges a template expression
+//!   by where it is written.
 //!
 //! The model already folds the different ways Vue lets a declaration be
 //! written into one shape, so a rule never matches on syntax to find them.
@@ -25,7 +28,8 @@ use biome_js_syntax::{AnyJsRoot, JsLanguage, JsSyntaxNode, TextRange};
 use biome_languages::{JsFileSource, LanguageDb};
 use biome_rowan::{AstNode, WalkEvent};
 use biome_vue_semantic::{
-    Component, Prop, SnippetId, Symbol, VueSemanticModel, component_model, vue_model_from_source,
+    Component, Prop, Snippet, SnippetId, Symbol, VueSemanticModel, component_model,
+    vue_model_from_source,
 };
 use camino::Utf8PathBuf;
 use std::rc::Rc;
@@ -127,6 +131,12 @@ impl Visitor for VueSemanticVisitor {
                 ctx.match_query(VuePropMatch(prop));
             }
         }
+        if let Some(snippet) = service.snippet {
+            ctx.match_query(VueSnippetMatch(
+                service.model.snippet(snippet),
+                node.text_trimmed_range(),
+            ));
+        }
     }
 }
 
@@ -173,3 +183,31 @@ define_vue_query!(
     VuePropMatch,
     Prop
 );
+
+/// Matches the analyzed tree when it is a snippet embedded in a `.vue` file.
+pub struct VueSnippet;
+
+/// The snippet, and the range of the analyzed tree's root.
+pub struct VueSnippetMatch(Snippet, TextRange);
+
+impl QueryMatch for VueSnippetMatch {
+    fn text_range(&self) -> TextRange {
+        self.1
+    }
+}
+
+impl Queryable for VueSnippet {
+    type Input = VueSnippetMatch;
+    type Output = Snippet;
+    type Language = JsLanguage;
+    type Services = SemanticServices;
+
+    fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, _: &AnyJsRoot) {
+        analyzer.add_visitor(Phases::Syntax, || SemanticModelBuilderVisitor);
+        analyzer.add_visitor(Phases::Semantic, || VueSemanticVisitor);
+    }
+
+    fn unwrap_match(_: &ServiceBag, query: &Self::Input) -> Self::Output {
+        query.0.clone()
+    }
+}
