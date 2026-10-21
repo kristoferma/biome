@@ -18,7 +18,7 @@ component Setup 0..532 name=MyList inheritAttrs=No
   Emit change 205..211 form=TypeMember payload=1
   Emit close 231..238 form=CallSignature payload=0
   Emit open 241..247 form=CallSignature payload=0
-  Model value 295..302
+  Model value 295..302 form=TypeMember types=String required=No
   Slot default 319..326
   Slot header 344..350
   LifecycleHook mounted 488..497
